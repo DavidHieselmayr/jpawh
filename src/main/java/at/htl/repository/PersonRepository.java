@@ -3,15 +3,15 @@
 package at.htl.repository;
 
 import at.htl.model.Person;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 @ApplicationScoped
-public class PersonRepository {
+public class PersonRepository implements PanacheRepository<Person> {
 
     @Inject
     EntityManager em;
@@ -21,12 +21,5 @@ public class PersonRepository {
         em.persist(p);
     }
 
-    public Object getAllPersons() {
-        try {
-            return em.createQuery("select p from Person p").getResultList();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
+
 }
